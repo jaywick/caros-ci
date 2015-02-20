@@ -1,4 +1,4 @@
-﻿namespace ProjectPublisher
+﻿namespace Publisher
 {
     partial class FormMain
     {
