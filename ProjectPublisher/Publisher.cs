@@ -22,6 +22,9 @@ namespace Publisher
 
         private string _path;
         private Repository _repo;
+        private Builder _builder;
+        private Zip _zip;
+        private Versioning _versioning;
 
         public Publisher(string solutionPath)
         {
@@ -41,12 +44,14 @@ namespace Publisher
                 return;
 
             if (updateTags())
-                Success("Updated release tag", 20);
+                Success("Updated release tag", 50);
             else
                 return;
 
-            // zip
-            // upload to ftp
+            if (updateZip())
+                Success("Compressing binaries", 60);
+            else
+                return;
         }
 
         private bool checkRepository()
@@ -70,16 +75,26 @@ namespace Publisher
 
         private bool rebuildRelease()
         {
-            var builder = new Builder(_path);
-            return builder.Build();
+            _builder = new Builder(_path);
+            _builder.Build();
+
+            return _builder.Result;
         }
 
         private bool updateTags()
         {
-            var versioning = new Versioning(_repo);
-            versioning.Update();
+            _versioning = new Versioning(_repo);
+            _versioning.Update();
 
-            return versioning.Result;
+            return _versioning.Result;
+        }
+
+        private bool updateZip()
+        {
+            _zip = new Zip(_builder.OutputPath, _versioning);
+            _zip.Compress();
+
+            return _zip.Result;
         }
 
         private void Fail(string message)

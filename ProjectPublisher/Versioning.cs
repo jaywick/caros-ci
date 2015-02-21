@@ -19,8 +19,11 @@ namespace Publisher
 
         public void Update()
         {
-            var nextReleaseTag = String.Format(ReleaseTagFormat, GetNextReleaseNumber().ToString());
+            NewRelease = GetNextReleaseNumber();
+            var nextReleaseTag = String.Format(ReleaseTagFormat, NewRelease.ToString());
             _repo.ApplyTagToCurrent(nextReleaseTag);
+
+            Result = true;
         }
 
         private int GetNextReleaseNumber()
@@ -41,9 +44,11 @@ namespace Publisher
             if (!parseResult)
                 return 1;
 
-            return latestRevision;
+            return latestRevision + 1;
         }
 
         public bool Result { get; set; }
+
+        public int NewRelease { get; set; }
     }
 }

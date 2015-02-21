@@ -22,7 +22,7 @@ namespace Publisher
             OutputPath = Path.GetTempPath();
         }
 
-        public bool Build(string platform = "x86")
+        public void Build(string platform = "x86")
         {
             var collection = new ProjectCollection();
 
@@ -33,10 +33,12 @@ namespace Publisher
 
             var parameters = new BuildParameters(collection);
             var request = new BuildRequestData(_solutionPath, GlobalProperty, "4.0", new string[] { "Build" }, null);
-            
+
             var buildResult = BuildManager.DefaultBuildManager.Build(parameters, request);
 
-            return (buildResult.OverallResult == BuildResultCode.Success);
+            Result = buildResult.OverallResult == BuildResultCode.Success;
         }
+
+        public bool Result { get; set; }
     }
 }

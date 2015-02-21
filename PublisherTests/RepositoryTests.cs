@@ -16,14 +16,14 @@ namespace PublisherTests
         public void ShouldDetermineDirtyRepo()
         {
             var repo = new Repository(DirtyRepoPath);
-            Assert.IsTrue(repo.IsClean);
+            Assert.IsFalse(repo.IsClean);
         }
 
         [TestCase]
         public void ShouldDetermineCleanRepo()
         {
             var repo = new Repository(CleanRepoPath);
-            Assert.IsFalse(repo.IsClean);
+            Assert.IsTrue(repo.IsClean);
         }
 
         [TestCase]
