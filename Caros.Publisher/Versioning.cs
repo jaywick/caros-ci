@@ -22,7 +22,7 @@ namespace Caros.Publisher
         {
             NewRelease = GetNextReleaseNumber();
             var nextReleaseTag = String.Format(ReleaseTagFormat, NewRelease.ToString());
-            _repo.ApplyTagToCurrent(nextReleaseTag);
+            _repo.TagCurrent(nextReleaseTag);
 
             Result = true;
         }
@@ -31,19 +31,17 @@ namespace Caros.Publisher
         {
             var releaseTagPattern = String.Format(ReleaseTagFormat, NumberGroupPattern);
 
-            var latestReleaseTag = _repo.Tags
-                .Last(x => x.Matches(releaseTagPattern));
+            var releaseTags = _repo.Tags
+                .Where(x => x.Matches(releaseTagPattern));
 
-            if (!latestReleaseTag.Any())
+            if (!releaseTags.Any())
                 return 1;
 
-            int latestRevision;
-            string latestRevisionText = latestReleaseTag.Extract(releaseTagPattern).First();
-
-            var parseResult = Int32.TryParse(latestRevisionText, out latestRevision);
-
-            if (!parseResult)
-                return 1;
+            var latestRevision = releaseTags
+                .Select(x => x.Extract(releaseTagPattern).First())
+                .Select(x => Int32.Parse(x))
+                .OrderByDescending(x => x)
+                .First();
 
             return latestRevision + 1;
         }

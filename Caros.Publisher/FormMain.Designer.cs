@@ -108,7 +108,7 @@
             this.Margin = new System.Windows.Forms.Padding(3, 4, 3, 4);
             this.Name = "FormMain";
             this.Text = "Publisher";
-            this.Load += new System.EventHandler(this.FormMain_Load);
+            this.Activated += new System.EventHandler(this.FormMain_Activated);
             this.tableLayoutPanel1.ResumeLayout(false);
             this.ResumeLayout(false);
 

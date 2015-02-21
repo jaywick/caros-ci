@@ -26,7 +26,7 @@ namespace Caros.Publisher
                 .First()
                 .FullName;
 
-            OutputPath = Path.GetTempPath();
+            OutputPath = Path.Combine(Path.GetTempPath(), "caros4-build-" + Guid.NewGuid().ToString());
         }
 
         public void Build(string platform = "x86")
@@ -39,7 +39,7 @@ namespace Caros.Publisher
             targets.Add("OutputPath", OutputPath);
 
             var parameters = new BuildParameters(collection);
-            var request = new BuildRequestData(_projectPath, targets, "4.0", new string[] { "Build" }, null);
+            var request = new BuildRequestData(_projectPath, targets, null, new string[] { "Build" }, null);
 
             var buildResult = BuildManager.DefaultBuildManager.Build(parameters, request);
 

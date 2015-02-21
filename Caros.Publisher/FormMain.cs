@@ -19,30 +19,6 @@ namespace Caros.Publisher
             InitializeComponent();
         }
 
-        private void FormMain_Load(object sender, EventArgs e)
-        {
-            var solutionPath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
-
-            if (solutionPath == null)
-            {
-                MessageBox.Show("Please give first command as location to Caros4 solution", "Cannot publish", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
-                this.Close();
-                return;
-            }
-
-            _startTime = DateTime.Now;
-
-            var publisher = new Publisher(solutionPath);
-
-            publisher.OnInfo += publisher_OnInfo;
-            publisher.OnFailure += publisher_OnFailure;
-            publisher.OnFinishedAll += publisher_OnFinishedAll;
-            publisher.OnSuccess += publisher_OnSuccess;
-            publisher.OnUpdateProgress += publisher_OnUpdateProgress;
-
-            publisher.Start();
-        }
-
         void publisher_OnUpdateProgress(float percentage)
         {
             progressAll.Value = (int)percentage;
@@ -88,6 +64,36 @@ namespace Caros.Publisher
                 default:
                     throw new InvalidOperationException("Unexpected EventType in GetImageKeyFromEventType '" + result.ToString() + "'");
             }
+        }
+
+        bool _formActivated  = false;
+        private void FormMain_Activated(object sender, EventArgs e)
+        {
+            if (_formActivated)
+                return;
+
+            _formActivated = true;
+
+            var solutionPath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+
+            if (solutionPath == null)
+            {
+                MessageBox.Show("Please give first command as location to Caros4 solution", "Cannot publish", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                this.Close();
+                return;
+            }
+
+            _startTime = DateTime.Now;
+
+            var publisher = new Publisher(solutionPath);
+
+            publisher.OnInfo += publisher_OnInfo;
+            publisher.OnFailure += publisher_OnFailure;
+            publisher.OnFinishedAll += publisher_OnFinishedAll;
+            publisher.OnSuccess += publisher_OnSuccess;
+            publisher.OnUpdateProgress += publisher_OnUpdateProgress;
+
+            publisher.Start();
         }
     }
 }

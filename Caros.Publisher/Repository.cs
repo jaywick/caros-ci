@@ -42,12 +42,12 @@ namespace Caros.Publisher
             get { return Repo.Tags.Select(x => x.Name); }
         }
 
-        public void ApplyTagToCurrent(string name)
+        public void TagCurrent(string name)
         {
             if (!IsClean)
                 throw new Exception("Repository is not clean");
 
-            Repo.Tags.Add(name, Repo.Commits.Last());
+            Repo.Tags.Add(name, Repo.Commits.First());
         }
     }
 }

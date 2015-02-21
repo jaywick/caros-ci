@@ -16,7 +16,7 @@ namespace Caros.Publisher
 
         public static IEnumerable<string> Extract(this string message, string pattern)
         {
-            foreach (Capture item in new Regex(pattern).Match(message).Captures)
+            foreach (Capture item in new Regex(pattern).Match(message).Groups.Cast<Group>().Skip(1))
                 yield return item.Value;
         }
 

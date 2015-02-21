@@ -97,7 +97,7 @@ namespace Caros.Publisher
             _builder = new Builder(_path);
             _builder.Build();
 
-            if (_builder.Result)
+            if (!_builder.Result)
                 Fail("Rebuild failed");
 
             return _builder.Result;
@@ -108,7 +108,7 @@ namespace Caros.Publisher
             _versioning = new Versioning(_repo);
             _versioning.Update();
 
-            if (_builder.Result)
+            if (!_versioning.Result)
                 Fail("Versioning failed");
 
             return _versioning.Result;
@@ -119,7 +119,7 @@ namespace Caros.Publisher
             _zip = new Zip(_builder.OutputPath, _versioning);
             _zip.Compress();
 
-            if (_builder.Result)
+            if (!_zip.Result)
                 Fail("Compression failed");
 
             return _zip.Result;
@@ -129,6 +129,9 @@ namespace Caros.Publisher
         {
             _ftp = new Ftp(_zip.PackageFile, "r" + _versioning.NewRelease);
             _ftp.Upload();
+
+            if (!_ftp.Result)
+                Fail("FTP Failed");
 
             return _ftp.Result;
         }

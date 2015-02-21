@@ -27,8 +27,8 @@ namespace Caros.Publisher
 
         public void Upload()
         {
-            UploadFile("/update/" + _sourceFile.Name, _sourceFile.FullName);
-            UploadFile("/update/" + VersionPointerFileName, CreateVersionPointerFile(VersionPointerFileName, _versionName));
+            Result = UploadFile("/update/" + _sourceFile.Name, _sourceFile.FullName);
+            Result &= UploadFile("/update/" + VersionPointerFileName, CreateVersionPointerFile(VersionPointerFileName, _versionName));
         }
 
         private bool UploadFile(string remotePath, string filePath)
@@ -47,7 +47,7 @@ namespace Caros.Publisher
 
             var response = (FtpWebResponse)request.GetResponse();
 
-            return response.StatusCode == FtpStatusCode.CommandOK;
+            return response.StatusDescription.StartsWith("226-File successfully transferred");
         }
 
         public string CreateVersionPointerFile(string filename, string contents)

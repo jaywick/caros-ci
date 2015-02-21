@@ -25,7 +25,8 @@ namespace Caros.Publisher
         public void Compress()
         {
             var archive = ZipFile.Create(PackageFile);
-            
+            archive.BeginUpdate();
+
             foreach (var item in new DirectoryInfo(_sourcePath).EnumerateFileSystemInfos())
 	        {
                 if (item is DirectoryInfo)
@@ -35,6 +36,7 @@ namespace Caros.Publisher
 	        }
 
             archive.CommitUpdate();
+            archive.Close();
 
             Result = true;
         }
