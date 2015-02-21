@@ -1,9 +1,9 @@
 ﻿using NUnit.Framework;
-using Publisher;
+using Caros.Publisher;
 using System;
 using System.IO;
 
-namespace PublisherTests
+namespace Caros.PublisherTests
 {
     [TestFixture]
     public class RepositoryTests

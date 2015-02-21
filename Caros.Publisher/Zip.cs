@@ -5,7 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Publisher
+namespace Caros.Publisher
 {
     class Zip
     {

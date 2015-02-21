@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
-using Publisher;
+using Caros.Publisher;
 
-namespace Publisher
+namespace Caros.Publisher
 {
     public class Publisher
     {

@@ -5,7 +5,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
-namespace Publisher
+namespace Caros.Publisher
 {
     public static class Extensions
     {
