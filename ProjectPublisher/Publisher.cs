@@ -25,6 +25,7 @@ namespace Publisher
         private Builder _builder;
         private Zip _zip;
         private Versioning _versioning;
+        private Ftp _ftp;
 
         public Publisher(string solutionPath)
         {
@@ -52,6 +53,13 @@ namespace Publisher
                 Success("Compressing binaries", 60);
             else
                 return;
+
+            if (uploadFtp())
+                Success("Uploaded to FTP", 75);
+            else
+                return;
+
+            Finish("Publish complete. " + _versioning.NewReleaseName);
         }
 
         private bool checkRepository()
@@ -97,6 +105,14 @@ namespace Publisher
             return _zip.Result;
         }
 
+        private bool uploadFtp()
+        {
+            _ftp = new Ftp(_zip.PackageFile, "r" + _versioning.NewRelease);
+            _ftp.Upload();
+
+            return _ftp.Result;
+        }
+
         private void Fail(string message)
         {
             if (OnFailure != null)
@@ -110,6 +126,12 @@ namespace Publisher
 
             if (OnUpdateProgress != null)
                 OnUpdateProgress.Invoke(progress);
+        }
+
+        public void Finish(string message)
+        {
+            if (OnFinishedAll != null)
+                OnFinishedAll.Invoke(message);
         }
     }
 }

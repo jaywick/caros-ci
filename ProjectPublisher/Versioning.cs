@@ -9,8 +9,9 @@ namespace Publisher
     {
         private Repository _repo;
 
-        private static readonly string ReleaseTagFormat = @"release/{0}";
-        private static readonly string NumberGroup = @"(\d+)";
+        private static readonly string ReleaseNameFormat = "r{0}";
+        private static readonly string ReleaseTagFormat = "release/{0}";
+        private static readonly string NumberGroupPattern = @"(\d+)";
 
         public Versioning(Repository repo)
         {
@@ -28,7 +29,7 @@ namespace Publisher
 
         private int GetNextReleaseNumber()
         {
-            var releaseTagPattern = String.Format(ReleaseTagFormat, NumberGroup);
+            var releaseTagPattern = String.Format(ReleaseTagFormat, NumberGroupPattern);
 
             var latestReleaseTag = _repo.Tags
                 .Last(x => x.Matches(releaseTagPattern));
@@ -50,5 +51,10 @@ namespace Publisher
         public bool Result { get; set; }
 
         public int NewRelease { get; set; }
+
+        public string NewReleaseName
+        {
+            get { return String.Format(ReleaseNameFormat, NewRelease.ToString()); }
+        }
     }
 }
