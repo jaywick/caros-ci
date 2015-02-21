@@ -12,7 +12,7 @@ namespace Caros.Publisher
         private string _sourcePath;
         private Versioning _versioning;
 
-        private readonly static string PackageNameFormat = "caros4_package_r{0}.zip";
+        private readonly static string PackageNameFormat = "r{0}.caros-update";
 
         public Zip(string sourcePath, Versioning versioning)
         {
@@ -28,12 +28,12 @@ namespace Caros.Publisher
             archive.BeginUpdate();
 
             foreach (var item in new DirectoryInfo(_sourcePath).EnumerateFileSystemInfos())
-	        {
+            {
                 if (item is DirectoryInfo)
                     archive.AddDirectory(item.FullName);
                 else
                     archive.Add(item.FullName);
-	        }
+            }
 
             archive.CommitUpdate();
             archive.Close();
