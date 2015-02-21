@@ -2,7 +2,9 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using Publisher;
 
 namespace Publisher
 {
@@ -19,7 +21,7 @@ namespace Publisher
         public delegate void PublishProgressEventHandler(float percentage);
 
         private string _path;
-        private string p;
+        private Repository _repo;
 
         public Publisher(string solutionPath)
         {
@@ -29,32 +31,35 @@ namespace Publisher
         public void Start()
         {
             if (checkRepository())
-                Success("", 10);
+                Success("Repository looks good", 10);
             else
                 return;
 
             if (rebuildRelease())
-                Success("", 20);
+                Success("Built release", 20);
             else
                 return;
 
-            // list all tags
-            // tag with next increment
+            if (updateTags())
+                Success("Updated release tag", 20);
+            else
+                return;
+
             // zip
             // upload to ftp
         }
 
         private bool checkRepository()
         {
-            var repo = new Repository(_path);
+            _repo = new Repository(_path);
 
-            if (!repo.Exists)
+            if (!_repo.Exists)
             {
                 Fail("Repository not found");
                 return false;
             }
-            
-            if (!repo.IsClean)
+
+            if (!_repo.IsClean)
             {
                 Fail("Repository is dirty");
                 return false;
@@ -65,8 +70,16 @@ namespace Publisher
 
         private bool rebuildRelease()
         {
-            //var repo = new Builder(_path);
-            return false;
+            var builder = new Builder(_path);
+            return builder.Build();
+        }
+
+        private bool updateTags()
+        {
+            var versioning = new Versioning(_repo);
+            versioning.Update();
+
+            return versioning.Result;
         }
 
         private void Fail(string message)

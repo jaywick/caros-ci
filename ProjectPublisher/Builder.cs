@@ -4,6 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Diagnostics;
+using Microsoft.Build.Evaluation;
+using Microsoft.Build.Execution;
+using System.IO;
 
 namespace Publisher
 {
@@ -11,23 +14,29 @@ namespace Publisher
     {
         private string _solutionPath;
 
+        public string OutputPath { get; set; }
+
         public Builder(string solutionPath)
         {
             _solutionPath = solutionPath;
+            OutputPath = Path.GetTempPath();
         }
 
-        public void Start()
+        public bool Build(string platform = "x86")
         {
-            var processInfo = new ProcessStartInfo(@"C:\WINDOWS\Microsoft.NET\Framework\v3.5\MsBuild.exe");
+            var collection = new ProjectCollection();
 
-            var arguments = new StringBuilder();
-            arguments.AppendLine(_solutionPath);
-            arguments.AppendLine(" /t:Rebuild");
-            arguments.AppendLine(" /p:Configuration=RELEASE");
-            arguments.AppendLine(" /p:Platform=\"x86\"");
-            processInfo.Arguments = arguments.ToString();
+            Dictionary<string, string> GlobalProperty = new Dictionary<string, string>();
+            GlobalProperty.Add("Configuration", "Release");
+            GlobalProperty.Add("Platform", platform);
+            GlobalProperty.Add("OutputPath", OutputPath);
 
-            Process.Start(processInfo);
+            var parameters = new BuildParameters(collection);
+            var request = new BuildRequestData(_solutionPath, GlobalProperty, "4.0", new string[] { "Build" }, null);
+            
+            var buildResult = BuildManager.DefaultBuildManager.Build(parameters, request);
+
+            return (buildResult.OverallResult == BuildResultCode.Success);
         }
     }
 }

@@ -10,7 +10,7 @@ namespace Publisher
     public class Repository
     {
         private string Path { get; set; }
-        private LibGit2Sharp.Repository InternalRepository { get; set; }
+        private LibGit2Sharp.Repository Repo { get; set; }
 
         public Repository(string path)
         {
@@ -18,7 +18,7 @@ namespace Publisher
 
             try
             {
-                InternalRepository = new LibGit2Sharp.Repository(path);
+                Repo = new LibGit2Sharp.Repository(path);
                 Exists = true;
             }
             catch (RepositoryNotFoundException)
@@ -33,8 +33,21 @@ namespace Publisher
         {
             get
             {
-                return !InternalRepository.RetrieveStatus().IsDirty;
+                return !Repo.RetrieveStatus().IsDirty;
             }
+        }
+
+        public IEnumerable<string> Tags
+        {
+            get { return Repo.Tags.Select(x => x.Name); }
+        }
+
+        public void ApplyTagToCurrent(string name)
+        {
+            if (!IsClean)
+                throw new Exception("Repository is not clean");
+
+            Repo.Tags.Add(name, Repo.Commits.Last());
         }
     }
 }
