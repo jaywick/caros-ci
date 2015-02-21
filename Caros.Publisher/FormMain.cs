@@ -12,19 +12,29 @@ namespace Caros.Publisher
 {
     public partial class FormMain : Form
     {
+        DateTime _startTime;
+
         public FormMain()
         {
             InitializeComponent();
         }
 
-        DateTime _startTime;
-
         private void FormMain_Load(object sender, EventArgs e)
         {
+            var solutionPath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
+
+            if (solutionPath == null)
+            {
+                MessageBox.Show("Please give first command as location to Caros4 solution", "Cannot publish", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                this.Close();
+                return;
+            }
+
             _startTime = DateTime.Now;
 
-            var publisher = new Publisher(@"C:\Users\Jay\Dropbox\Developer\Workspace\ProjectPublisher\ProjectPublisher");
+            var publisher = new Publisher(solutionPath);
 
+            publisher.OnInfo += publisher_OnInfo;
             publisher.OnFailure += publisher_OnFailure;
             publisher.OnFinishedAll += publisher_OnFinishedAll;
             publisher.OnSuccess += publisher_OnSuccess;
@@ -52,6 +62,11 @@ namespace Caros.Publisher
         void publisher_OnFailure(string message)
         {
             Post(message, Publisher.EventTypes.Failure);
+        }
+
+        void publisher_OnInfo(string message)
+        {
+            Post(message, Publisher.EventTypes.Info);
         }
 
         private void Post(string message, Publisher.EventTypes result)

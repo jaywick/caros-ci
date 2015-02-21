@@ -12,6 +12,7 @@ namespace Caros.Publisher
     {
         public enum EventTypes { Success, Failure, Info }
 
+        public event PublishEventHandler OnInfo;
         public event PublishEventHandler OnFailure;
         public event PublishProgressEventHandler OnUpdateProgress;
         public event PublishEventHandler OnSuccess;
@@ -34,25 +35,35 @@ namespace Caros.Publisher
 
         public void Start()
         {
+            Info("Checking repository");
+
             if (checkRepository())
                 Success("Repository looks good", 10);
             else
                 return;
+
+            Info("Rebuilding solution");
 
             if (rebuildRelease())
                 Success("Built release", 20);
             else
                 return;
 
+            Info("Updating version info");
+
             if (updateTags())
-                Success("Updated release tag", 50);
+                Success("Updated version info", 50);
             else
                 return;
 
+            Info("Starting compression of binaries");
+
             if (updateZip())
-                Success("Compressing binaries", 60);
+                Success("Compressed binaries", 60);
             else
                 return;
+
+            Info("Starting FTP upload");
 
             if (uploadFtp())
                 Success("Uploaded to FTP", 75);
@@ -86,6 +97,9 @@ namespace Caros.Publisher
             _builder = new Builder(_path);
             _builder.Build();
 
+            if (_builder.Result)
+                Fail("Rebuild failed");
+
             return _builder.Result;
         }
 
@@ -94,6 +108,9 @@ namespace Caros.Publisher
             _versioning = new Versioning(_repo);
             _versioning.Update();
 
+            if (_builder.Result)
+                Fail("Versioning failed");
+
             return _versioning.Result;
         }
 
@@ -101,6 +118,9 @@ namespace Caros.Publisher
         {
             _zip = new Zip(_builder.OutputPath, _versioning);
             _zip.Compress();
+
+            if (_builder.Result)
+                Fail("Compression failed");
 
             return _zip.Result;
         }
@@ -117,6 +137,12 @@ namespace Caros.Publisher
         {
             if (OnFailure != null)
                 OnFailure.Invoke(message);
+        }
+
+        public void Info(string message)
+        {
+            if (OnInfo != null)
+                OnInfo.Invoke(message);
         }
 
         public void Success(string message, float progress)
