@@ -16,6 +16,7 @@ namespace Caros.Publisher
         private string _projectPath;
 
         public string OutputPath { get; set; }
+        public bool Result { get; set; }
 
         public Builder(string solutionPath)
         {
@@ -46,6 +47,5 @@ namespace Caros.Publisher
             Result = buildResult.OverallResult == BuildResultCode.Success;
         }
 
-        public bool Result { get; set; }
     }
 }

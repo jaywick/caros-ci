@@ -13,13 +13,14 @@ namespace Caros.Publisher
         private Versioning _versioning;
 
         private readonly static string PackageNameFormat = "r{0}.caros-update";
+        private readonly static string Key = "YyEvuWz7yMYTXtjUaKC4MA7Xlhe1TZNmJ3NcpCJunUk1H0EUj00iNL20yYaUb9F6yqijpFovu/QmXV1ZGj7S9Q==";
 
         public Zip(string sourcePath, Versioning versioning)
         {
             _sourcePath = sourcePath;
             _versioning = versioning;
 
-            PackageFile = String.Format(PackageNameFormat, _versioning.NewRelease);
+            PackageFile = Path.Combine(Path.GetTempPath(), String.Format(PackageNameFormat, _versioning.NewRelease));
         }
 
         public void Compress()
@@ -27,14 +28,13 @@ namespace Caros.Publisher
             var archive = ZipFile.Create(PackageFile);
             archive.BeginUpdate();
 
-            foreach (var item in new DirectoryInfo(_sourcePath).EnumerateFileSystemInfos())
+            foreach (var item in new DirectoryInfo(_sourcePath).EnumerateFiles("*", SearchOption.AllDirectories))
             {
-                if (item is DirectoryInfo)
-                    archive.AddDirectory(item.FullName);
-                else
-                    archive.Add(item.FullName);
+                var relativePath = item.FullName.Substring(_sourcePath.Length + 1);
+                archive.Add(item.FullName, relativePath);
             }
 
+            archive.Password = Key;
             archive.CommitUpdate();
             archive.Close();
 

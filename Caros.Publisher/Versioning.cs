@@ -2,29 +2,47 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Xml.Linq;
 
 namespace Caros.Publisher
 {
     class Versioning
     {
         private Repository _repo;
+        private Builder _builder;
 
         private static readonly string ReleaseNameFormat = "r{0}";
         private static readonly string ReleaseTagFormat = "release/{0}";
         private static readonly string NumberGroupPattern = @"(\d+)";
 
-        public Versioning(Repository repo)
+        public Versioning(Repository repo, Builder builder)
         {
             _repo = repo;
+            _builder = builder;
         }
 
         public void Update()
         {
             NewRelease = GetNextReleaseNumber();
+
             var nextReleaseTag = String.Format(ReleaseTagFormat, NewRelease.ToString());
             _repo.TagCurrent(nextReleaseTag);
 
+            CreateMetaXml();
+
             Result = true;
+        }
+
+        private void CreateMetaXml()
+        {
+            var path = System.IO.Path.Combine(_builder.OutputPath, "meta.xml");
+
+            var xdoc = new XDocument();
+            xdoc.Add(new XElement("Meta"));
+            xdoc.Element("Meta").Add(new XElement("Release", NewRelease));
+            xdoc.Element("Meta").Add(new XElement("ReleaseName", NewReleaseName));
+
+            xdoc.Save(path);
         }
 
         private int GetNextReleaseNumber()

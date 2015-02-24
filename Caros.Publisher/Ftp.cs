@@ -11,24 +11,26 @@ namespace Caros.Publisher
     {
         private FileInfo _sourceFile;
         private NetworkCredential _credentials;
-        private string _versionName;
+        private int _versionNumber;
 
         private const string Host = "103.9.171.165";
         private const string Password = "_=nMqH!m@naV";
         private const string Username = "caros@jay-wick.com";
         private const string VersionPointerFileName = "version.pointer";
 
-        public Ftp(string sourceFilePath, string versionName)
+        public bool Result { get; set; }
+
+        public Ftp(string sourceFilePath, int versionNumber)
         {
             _sourceFile = new FileInfo(sourceFilePath);
             _credentials = new System.Net.NetworkCredential(Username, Password);
-            _versionName = versionName;
+            _versionNumber = versionNumber;
         }
 
         public void Upload()
         {
-            Result = UploadFile("/update/" + _sourceFile.Name, _sourceFile.FullName);
-            Result &= UploadFile("/update/" + VersionPointerFileName, CreateVersionPointerFile(VersionPointerFileName, _versionName));
+            Result = UploadFile("/updates/" + _sourceFile.Name, _sourceFile.FullName);
+            Result &= UploadFile("/updates/" + VersionPointerFileName, CreateVersionPointerFile(VersionPointerFileName, _versionNumber.ToString()));
         }
 
         private bool UploadFile(string remotePath, string filePath)
@@ -57,7 +59,5 @@ namespace Caros.Publisher
 
             return path;
         }
-
-        public bool Result { get; set; }
     }
 }

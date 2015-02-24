@@ -51,7 +51,7 @@ namespace Caros.Publisher
 
             Info("Updating version info");
 
-            if (updateTags())
+            if (stampVersion())
                 Success("Updated version info", 50);
             else
                 return;
@@ -76,7 +76,7 @@ namespace Caros.Publisher
         private bool checkRepository()
         {
             _repo = new Repository(_path);
-
+            
             if (!_repo.Exists)
             {
                 Fail("Repository not found");
@@ -103,9 +103,9 @@ namespace Caros.Publisher
             return _builder.Result;
         }
 
-        private bool updateTags()
+        private bool stampVersion()
         {
-            _versioning = new Versioning(_repo);
+            _versioning = new Versioning(_repo, _builder);
             _versioning.Update();
 
             if (!_versioning.Result)
@@ -127,7 +127,7 @@ namespace Caros.Publisher
 
         private bool uploadFtp()
         {
-            _ftp = new Ftp(_zip.PackageFile, "r" + _versioning.NewRelease);
+            _ftp = new Ftp(_zip.PackageFile, _versioning.NewRelease);
             _ftp.Upload();
 
             if (!_ftp.Result)
