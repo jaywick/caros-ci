@@ -24,9 +24,10 @@ namespace Caros.CI.Publisher
         private string _path;
         private Repository _repo;
         private Builder _builder;
-        private Zip _zip;
         private DeployVersion _versioning;
         private Ftp _ftp;
+
+        private string ZipPackage { get; set; }
 
         public Publisher(string solutionPath)
         {
@@ -116,18 +117,17 @@ namespace Caros.CI.Publisher
 
         private bool updateZip()
         {
-            _zip = new Zip(_builder.OutputPath, _versioning);
-            _zip.Compress();
+            ZipPackage = Zip.Compress(_versioning.NewRelease.ToString(), _builder.OutputPath);
 
-            if (!_zip.Result)
+            if (ZipPackage == null)
                 Fail("Compression failed");
 
-            return _zip.Result;
+            return ZipPackage != null;
         }
 
         private bool uploadFtp()
         {
-            _ftp = new Ftp(_zip.PackageFile, _versioning.NewRelease);
+            _ftp = new Ftp(ZipPackage, _versioning.NewRelease);
             _ftp.Upload();
 
             if (!_ftp.Result)

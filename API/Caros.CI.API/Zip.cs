@@ -7,30 +7,21 @@ using System.Text;
 
 namespace Caros.CI.API
 {
-    public class Zip
+    public static class Zip
     {
-        private string _sourcePath;
-        private DeployVersion _versioning;
-
         private readonly static string PackageNameFormat = "r{0}.caros-update";
         private readonly static string Key = "YyEvuWz7yMYTXtjUaKC4MA7Xlhe1TZNmJ3NcpCJunUk1H0EUj00iNL20yYaUb9F6yqijpFovu/QmXV1ZGj7S9Q==";
 
-        public Zip(string sourcePath, DeployVersion versioning)
+        public static string Compress(string fileName, string sourcePath)
         {
-            _sourcePath = sourcePath;
-            _versioning = versioning;
+            var packageFile = Path.Combine(Path.GetTempPath(), String.Format(PackageNameFormat, fileName));
 
-            PackageFile = Path.Combine(Path.GetTempPath(), String.Format(PackageNameFormat, _versioning.NewRelease));
-        }
-
-        public void Compress()
-        {
-            var archive = ZipFile.Create(PackageFile);
+            var archive = ZipFile.Create(packageFile);
             archive.BeginUpdate();
 
-            foreach (var item in new DirectoryInfo(_sourcePath).EnumerateFiles("*", SearchOption.AllDirectories))
+            foreach (var item in new DirectoryInfo(sourcePath).EnumerateFiles("*", SearchOption.AllDirectories))
             {
-                var relativePath = item.FullName.Substring(_sourcePath.Length + 1);
+                var relativePath = item.FullName.Substring(sourcePath.Length + 1);
                 archive.Add(item.FullName, relativePath);
             }
 
@@ -38,11 +29,8 @@ namespace Caros.CI.API
             archive.CommitUpdate();
             archive.Close();
 
-            Result = true;
+            return packageFile;
         }
-
-        public bool Result { get; set; }
-        public string PackageFile { get; set; }
 
         public static void Uncompress(string sourcePath, string destinationFolder)
         {
