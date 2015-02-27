@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -27,6 +28,16 @@ namespace Caros.CI.API
         private UpdateInfo()
         {
             Exists = false;
+        }
+
+        public string Download()
+        {
+            var tempPath = Path.Combine(Path.GetTempPath(), Guid.NewGuid().ToString());
+            
+            var web = new System.Net.WebClient();
+            web.DownloadFile(DownloadAddress, tempPath);
+
+            return tempPath;
         }
     }
 }

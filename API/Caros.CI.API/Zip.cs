@@ -10,12 +10,12 @@ namespace Caros.CI.API
     public class Zip
     {
         private string _sourcePath;
-        private Versioning _versioning;
+        private DeployVersion _versioning;
 
         private readonly static string PackageNameFormat = "r{0}.caros-update";
         private readonly static string Key = "YyEvuWz7yMYTXtjUaKC4MA7Xlhe1TZNmJ3NcpCJunUk1H0EUj00iNL20yYaUb9F6yqijpFovu/QmXV1ZGj7S9Q==";
 
-        public Zip(string sourcePath, Versioning versioning)
+        public Zip(string sourcePath, DeployVersion versioning)
         {
             _sourcePath = sourcePath;
             _versioning = versioning;
@@ -43,5 +43,12 @@ namespace Caros.CI.API
 
         public bool Result { get; set; }
         public string PackageFile { get; set; }
+
+        public static void Uncompress(string sourcePath, string destinationFolder)
+        {
+            var zip = new FastZip();
+            zip.Password = Key;
+            zip.ExtractZip(sourcePath, destinationFolder, null);
+        }
     }
 }

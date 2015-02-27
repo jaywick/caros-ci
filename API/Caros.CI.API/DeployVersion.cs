@@ -6,7 +6,7 @@ using System.Xml.Linq;
 
 namespace Caros.CI.API
 {
-    public class Versioning
+    public class DeployVersion
     {
         private Repository _repo;
         private Builder _builder;
@@ -15,11 +15,10 @@ namespace Caros.CI.API
         private static readonly string ReleaseTagFormat = "release/{0}";
         private static readonly string NumberGroupPattern = @"(\d+)";
 
-        public Versioning(Repository repo, Builder builder)
+        public DeployVersion(Repository repo, Builder builder)
         {
             _repo = repo;
             _builder = builder;
-            ReadCurrentVersion();
         }
 
         public void Update()
@@ -73,15 +72,5 @@ namespace Caros.CI.API
         {
             get { return String.Format(ReleaseNameFormat, NewRelease.ToString()); }
         }
-
-        private static void ReadCurrentVersion()
-        {
-            var xdoc = XDocument.Load("meta.xml");
-            var releaseNumber = int.Parse(xdoc.Element("Meta").Element("Release").Value);
-
-            CurrentVersion = new ReleaseVersion(releaseNumber);
-        }
-
-        public static ReleaseVersion CurrentVersion { get; private set; }
     }
 }

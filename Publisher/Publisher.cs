@@ -25,7 +25,7 @@ namespace Caros.CI.Publisher
         private Repository _repo;
         private Builder _builder;
         private Zip _zip;
-        private Versioning _versioning;
+        private DeployVersion _versioning;
         private Ftp _ftp;
 
         public Publisher(string solutionPath)
@@ -105,7 +105,7 @@ namespace Caros.CI.Publisher
 
         private bool stampVersion()
         {
-            _versioning = new Versioning(_repo, _builder);
+            _versioning = new DeployVersion(_repo, _builder);
             _versioning.Update();
 
             if (!_versioning.Result)
