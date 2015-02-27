@@ -23,10 +23,10 @@ namespace Caros.CI.Publisher
 
         private string _path;
         private Repository _repo;
-        private DeployVersion _versioning;
 
         private string ZipPackage { get; set; }
         private string OutputPath { get; set; }
+        private ReleaseVersion NewRelease { get; set; }
 
         public Publisher(string solutionPath)
         {
@@ -70,7 +70,7 @@ namespace Caros.CI.Publisher
             else
                 return;
 
-            Finish("Publish complete. " + _versioning.NewReleaseName);
+            Finish("Publish complete. " + NewRelease.ReleaseName);
         }
 
         private bool checkRepository()
@@ -104,18 +104,13 @@ namespace Caros.CI.Publisher
 
         private bool stampVersion()
         {
-            _versioning = new DeployVersion(_repo);
-            _versioning.Update(OutputPath);
-
-            if (!_versioning.Result)
-                Fail("Versioning failed");
-
-            return _versioning.Result;
+            NewRelease = DeployVersion.Update(_repo, OutputPath);
+            return true;
         }
 
         private bool updateZip()
         {
-            ZipPackage = Zip.Compress(_versioning.NewRelease.ToString(), OutputPath);
+            ZipPackage = Zip.Compress(NewRelease.ReleaseName, OutputPath);
 
             if (ZipPackage == null)
                 Fail("Compression failed");

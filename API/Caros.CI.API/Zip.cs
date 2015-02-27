@@ -9,7 +9,7 @@ namespace Caros.CI.API
 {
     public static class Zip
     {
-        private readonly static string PackageNameFormat = "r{0}.caros-update";
+        private readonly static string PackageNameFormat = "{0}.caros-update";
         private readonly static string Key = "YyEvuWz7yMYTXtjUaKC4MA7Xlhe1TZNmJ3NcpCJunUk1H0EUj00iNL20yYaUb9F6yqijpFovu/QmXV1ZGj7S9Q==";
 
         public static string Compress(string fileName, string sourcePath)

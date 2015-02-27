@@ -6,32 +6,25 @@ using System.Xml.Linq;
 
 namespace Caros.CI.API
 {
-    public class DeployVersion
+    public static class DeployVersion
     {
-        private Repository _repo;
-
         private static readonly string ReleaseNameFormat = "r{0}";
         private static readonly string ReleaseTagFormat = "release/{0}";
         private static readonly string NumberGroupPattern = @"(\d+)";
 
-        public DeployVersion(Repository repo)
+        public static ReleaseVersion Update(Repository repo, string outputPath)
         {
-            _repo = repo;
-        }
-
-        public void Update(string outputPath)
-        {
-            NewRelease = GetNextReleaseNumber();
+            NewRelease = GetNextReleaseNumber(repo);
 
             var nextReleaseTag = String.Format(ReleaseTagFormat, NewRelease.ToString());
-            _repo.TagCurrent(nextReleaseTag);
+            repo.TagCurrent(nextReleaseTag);
 
             CreateMetaXml(outputPath);
 
-            Result = true;
+            return new ReleaseVersion(NewRelease);
         }
 
-        private void CreateMetaXml(string outputPath)
+        private static void CreateMetaXml(string outputPath)
         {
             var path = System.IO.Path.Combine(outputPath, "meta.xml");
 
@@ -43,11 +36,11 @@ namespace Caros.CI.API
             xdoc.Save(path);
         }
 
-        private int GetNextReleaseNumber()
+        private static int GetNextReleaseNumber(Repository repo)
         {
             var releaseTagPattern = String.Format(ReleaseTagFormat, NumberGroupPattern);
 
-            var releaseTags = _repo.Tags
+            var releaseTags = repo.Tags
                 .Where(x => x.Matches(releaseTagPattern));
 
             if (!releaseTags.Any())
@@ -62,11 +55,9 @@ namespace Caros.CI.API
             return latestRevision + 1;
         }
 
-        public bool Result { get; set; }
+        public static int NewRelease { get; set; }
 
-        public int NewRelease { get; set; }
-
-        public string NewReleaseName
+        public static string NewReleaseName
         {
             get { return String.Format(ReleaseNameFormat, NewRelease.ToString()); }
         }
