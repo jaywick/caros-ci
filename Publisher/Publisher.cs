@@ -25,7 +25,6 @@ namespace Caros.CI.Publisher
         private Repository _repo;
         private Builder _builder;
         private DeployVersion _versioning;
-        private Ftp _ftp;
 
         private string ZipPackage { get; set; }
 
@@ -127,13 +126,12 @@ namespace Caros.CI.Publisher
 
         private bool uploadFtp()
         {
-            _ftp = new Ftp(ZipPackage, _versioning.NewRelease);
-            _ftp.Upload();
+            var result = Ftp.Upload(ZipPackage);
 
-            if (!_ftp.Result)
+            if (!result)
                 Fail("FTP Failed");
 
-            return _ftp.Result;
+            return result;
         }
 
         private void Fail(string message)

@@ -75,6 +75,7 @@
     <Compile Include="UpdateInfo.cs" />
     <Compile Include="ClientVersion.cs" />
     <Compile Include="DeployVersion.cs" />
+    <Compile Include="VersionPointer.cs" />
     <Compile Include="Zip.cs" />
   </ItemGroup>
   <ItemGroup>

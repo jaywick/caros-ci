@@ -7,39 +7,29 @@ using System.Text;
 
 namespace Caros.CI.API
 {
-    public class Ftp
+    public static class Ftp
     {
-        private FileInfo _sourceFile;
-        private NetworkCredential _credentials;
-        private int _versionNumber;
+        private static NetworkCredential _credentials;
 
         private const string Host = "103.9.171.165";
         private const string Password = "_=nMqH!m@naV";
         private const string Username = "caros@jay-wick.com";
         private const string VersionPointerFileName = "version.pointer";
 
-        public bool Result { get; set; }
-
-        public Ftp(string sourceFilePath, int versionNumber)
+        static Ftp()
         {
-            _sourceFile = new FileInfo(sourceFilePath);
             _credentials = new System.Net.NetworkCredential(Username, Password);
-            _versionNumber = versionNumber;
         }
 
-        public void Upload()
+        public static bool Upload(string sourceFile)
         {
-            Result = UploadFile("/updates/" + _sourceFile.Name, _sourceFile.FullName);
-            Result &= UploadFile("/updates/" + VersionPointerFileName, CreateVersionPointerFile(VersionPointerFileName, _versionNumber.ToString()));
-        }
+            var file = new FileInfo(sourceFile);
 
-        private bool UploadFile(string remotePath, string filePath)
-        {
-            var request = WebRequest.Create("ftp://" + Host + remotePath) as FtpWebRequest;
+            var request = WebRequest.Create("ftp://" + Host + "/updates/" + file.Name) as FtpWebRequest;
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.Credentials = _credentials;
 
-            var contents = File.ReadAllBytes(filePath);
+            var contents = File.ReadAllBytes(file.FullName);
             request.ContentLength = contents.Length;
 
             using (var requestStream = request.GetRequestStream())
@@ -50,14 +40,6 @@ namespace Caros.CI.API
             var response = (FtpWebResponse)request.GetResponse();
 
             return response.StatusDescription.StartsWith("226-File successfully transferred");
-        }
-
-        public string CreateVersionPointerFile(string filename, string contents)
-        {
-            var path = Path.Combine(Path.GetTempPath(), filename);
-            File.WriteAllText(path, contents);
-
-            return path;
         }
     }
 }
