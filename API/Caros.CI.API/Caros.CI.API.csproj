@@ -66,10 +66,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Builder.cs" />
+    <Compile Include="Deployment.cs" />
     <Compile Include="Extensions.cs" />
     <Compile Include="Ftp.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ReleaseVersion.cs" />
     <Compile Include="Repository.cs" />
+    <Compile Include="UpdateInfo.cs" />
     <Compile Include="Versioning.cs" />
     <Compile Include="Zip.cs" />
   </ItemGroup>

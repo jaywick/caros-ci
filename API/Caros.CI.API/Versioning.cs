@@ -19,6 +19,7 @@ namespace Caros.CI.API
         {
             _repo = repo;
             _builder = builder;
+            ReadCurrentVersion();
         }
 
         public void Update()
@@ -72,5 +73,15 @@ namespace Caros.CI.API
         {
             get { return String.Format(ReleaseNameFormat, NewRelease.ToString()); }
         }
+
+        private static void ReadCurrentVersion()
+        {
+            var xdoc = XDocument.Load("meta.xml");
+            var releaseNumber = int.Parse(xdoc.Element("Meta").Element("Release").Value);
+
+            CurrentVersion = new ReleaseVersion(releaseNumber);
+        }
+
+        public static ReleaseVersion CurrentVersion { get; private set; }
     }
 }
