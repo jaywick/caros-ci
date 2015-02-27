@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Xml.Linq;
 
-namespace Caros.CI.Publisher
+namespace Caros.CI.API
 {
-    class Versioning
+    public class Versioning
     {
         private Repository _repo;
         private Builder _builder;

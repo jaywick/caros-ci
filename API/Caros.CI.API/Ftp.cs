@@ -5,9 +5,9 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Caros.CI.Publisher
+namespace Caros.CI.API
 {
-    class Ftp
+    public class Ftp
     {
         private FileInfo _sourceFile;
         private NetworkCredential _credentials;

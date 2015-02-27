@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Caros.CI.Publisher
+namespace Caros.CI.API
 {
     public class Repository
     {

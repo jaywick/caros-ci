@@ -5,9 +5,9 @@ using System.IO;
 using System.Linq;
 using System.Text;
 
-namespace Caros.CI.Publisher
+namespace Caros.CI.API
 {
-    class Zip
+    public class Zip
     {
         private string _sourcePath;
         private Versioning _versioning;

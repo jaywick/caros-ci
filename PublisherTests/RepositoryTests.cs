@@ -2,8 +2,9 @@
 using Caros.CI.Publisher;
 using System;
 using System.IO;
+using Caros.CI.API;
 
-namespace Caros.CI.PublisherTests
+namespace Caros.CI.APITests
 {
     [TestFixture]
     public class RepositoryTests
