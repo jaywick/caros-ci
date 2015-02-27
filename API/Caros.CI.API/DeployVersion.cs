@@ -9,33 +9,31 @@ namespace Caros.CI.API
     public class DeployVersion
     {
         private Repository _repo;
-        private Builder _builder;
 
         private static readonly string ReleaseNameFormat = "r{0}";
         private static readonly string ReleaseTagFormat = "release/{0}";
         private static readonly string NumberGroupPattern = @"(\d+)";
 
-        public DeployVersion(Repository repo, Builder builder)
+        public DeployVersion(Repository repo)
         {
             _repo = repo;
-            _builder = builder;
         }
 
-        public void Update()
+        public void Update(string outputPath)
         {
             NewRelease = GetNextReleaseNumber();
 
             var nextReleaseTag = String.Format(ReleaseTagFormat, NewRelease.ToString());
             _repo.TagCurrent(nextReleaseTag);
 
-            CreateMetaXml();
+            CreateMetaXml(outputPath);
 
             Result = true;
         }
 
-        private void CreateMetaXml()
+        private void CreateMetaXml(string outputPath)
         {
-            var path = System.IO.Path.Combine(_builder.OutputPath, "meta.xml");
+            var path = System.IO.Path.Combine(outputPath, "meta.xml");
 
             var xdoc = new XDocument();
             xdoc.Add(new XElement("Meta"));

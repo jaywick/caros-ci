@@ -10,41 +10,33 @@ using System.IO;
 
 namespace Caros.CI.API
 {
-    public class Builder
+    public static class Builder
     {
-        private string _solutionPath;
-        private string _projectPath;
-
-        public string OutputPath { get; set; }
-        public bool Result { get; set; }
-
-        public Builder(string solutionPath)
+        public static string Build(string solutionPath)
         {
-            _solutionPath = solutionPath;
-
-            _projectPath = new DirectoryInfo(_solutionPath)
+            var projectPath = new DirectoryInfo(solutionPath)
                 .EnumerateFiles("Caros.csproj", SearchOption.AllDirectories)
                 .First()
                 .FullName;
 
-            OutputPath = Path.Combine(Path.GetTempPath(), "caros4-build-" + Guid.NewGuid().ToString());
-        }
+            var outputPath = Path.Combine(Path.GetTempPath(), "caros4-build-" + Guid.NewGuid().ToString());
 
-        public void Build(string platform = "x86")
-        {
             var collection = new ProjectCollection();
 
             var targets = new Dictionary<string, string>();
             targets.Add("Configuration", "RELEASE");
-            targets.Add("Platform", platform);
-            targets.Add("OutputPath", OutputPath);
+            targets.Add("Platform", "x86");
+            targets.Add("OutputPath", outputPath);
 
             var parameters = new BuildParameters(collection);
-            var request = new BuildRequestData(_projectPath, targets, null, new string[] { "Build" }, null);
+            var request = new BuildRequestData(projectPath, targets, null, new string[] { "Build" }, null);
 
             var buildResult = BuildManager.DefaultBuildManager.Build(parameters, request);
 
-            Result = buildResult.OverallResult == BuildResultCode.Success;
+            if (buildResult.OverallResult != BuildResultCode.Success)
+                return null;
+
+            return outputPath;
         }
 
     }
