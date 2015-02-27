@@ -5,7 +5,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 
-namespace Caros.Publisher
+namespace Caros.CI.Publisher
 {
     class Ftp
     {

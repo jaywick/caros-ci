@@ -1,4 +1,4 @@
-﻿namespace Caros.Publisher
+﻿namespace Caros.CI.Publisher
 {
     partial class FormMain
     {

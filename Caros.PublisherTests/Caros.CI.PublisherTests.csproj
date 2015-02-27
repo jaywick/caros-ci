@@ -213,9 +213,9 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Caros.Publisher\Caros.Publisher.csproj">
+    <ProjectReference Include="..\Caros.Publisher\Caros.CI.Publisher.csproj">
       <Project>{fe0c0a42-395e-4305-ac14-14a47965b2c5}</Project>
-      <Name>Caros.Publisher</Name>
+      <Name>Caros.CI.Publisher</Name>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>

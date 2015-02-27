@@ -8,7 +8,7 @@ using Microsoft.Build.Evaluation;
 using Microsoft.Build.Execution;
 using System.IO;
 
-namespace Caros.Publisher
+namespace Caros.CI.Publisher
 {
     public class Builder
     {

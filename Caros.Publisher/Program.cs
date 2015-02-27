@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Caros.Publisher
+namespace Caros.CI.Publisher
 {
     static class Program
     {

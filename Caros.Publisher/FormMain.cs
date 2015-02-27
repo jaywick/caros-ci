@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace Caros.Publisher
+namespace Caros.CI.Publisher
 {
     public partial class FormMain : Form
     {

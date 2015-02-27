@@ -8,8 +8,8 @@
     <ProjectGuid>{FE0C0A42-395E-4305-AC14-14A47965B2C5}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>Caros.Publisher</RootNamespace>
-    <AssemblyName>Caros.Publisher</AssemblyName>
+    <RootNamespace>Caros.CI.Publisher</RootNamespace>
+    <AssemblyName>publish</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <NuGetPackageImportStamp>8beb79e9</NuGetPackageImportStamp>
