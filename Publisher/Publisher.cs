@@ -33,44 +33,69 @@ namespace Caros.CI.Publisher
             _path = solutionPath;
         }
 
-        public void Start()
+        public async void Start()
         {
             Info("Checking repository");
 
-            if (checkRepository())
+            if (await checkRepositoryAsync())
                 Success("Repository looks good", 10);
             else
                 return;
 
             Info("Rebuilding solution");
 
-            if (rebuildRelease())
+            if (await rebuildReleaseAsync())
                 Success("Built release", 20);
             else
                 return;
 
             Info("Updating version info");
 
-            if (stampVersion())
+            if (await stampVersionAsync())
                 Success("Updated version info", 50);
             else
                 return;
 
             Info("Starting compression of binaries");
 
-            if (updateZip())
+            if (await updateZipAsync())
                 Success("Compressed binaries", 60);
             else
                 return;
 
             Info("Starting FTP upload");
 
-            if (uploadFtp())
+            if (await uploadFtpAsync())
                 Success("Uploaded to FTP", 75);
             else
                 return;
 
             Finish("Publish complete. " + NewRelease.ReleaseName);
+        }
+
+        private Task<bool> checkRepositoryAsync()
+        {
+            return Task.Run(() => checkRepository());
+        }
+
+        private Task<bool> rebuildReleaseAsync()
+        {
+            return Task.Run(() => rebuildRelease());
+        }
+
+        private Task<bool> stampVersionAsync()
+        {
+            return Task.Run(() => stampVersion());
+        }
+
+        private Task<bool> updateZipAsync()
+        {
+            return Task.Run(() => updateZip());
+        }
+
+        private Task<bool> uploadFtpAsync()
+        {
+            return Task.Run(() => uploadFtp());
         }
 
         private bool checkRepository()
