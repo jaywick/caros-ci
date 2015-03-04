@@ -121,7 +121,7 @@ namespace Caros.CI.Publisher
         {
             OutputPath = Builder.Build(_path);
 
-            if (OutputPath != null)
+            if (OutputPath == null)
                 Fail("Rebuild failed");
 
             return OutputPath != null;

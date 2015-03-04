@@ -15,7 +15,7 @@ namespace Caros.CI.API
         public static string Build(string solutionPath)
         {
             var projectPath = new DirectoryInfo(solutionPath)
-                .EnumerateFiles("Caros.csproj", SearchOption.AllDirectories)
+                .EnumerateFiles("Caros.sln", SearchOption.AllDirectories)
                 .First()
                 .FullName;
 
