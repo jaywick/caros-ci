@@ -44,9 +44,6 @@ namespace Caros.CI.API
 
         public void TagCurrent(string name)
         {
-            if (!IsClean)
-                throw new Exception("Repository is not clean");
-
             Repo.Tags.Add(name, Repo.Commits.First());
         }
     }

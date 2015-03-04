@@ -74,8 +74,10 @@ namespace Caros.CI.Publisher
 
             _formActivated = true;
 
-            var solutionPath = Environment.GetCommandLineArgs().Skip(1).FirstOrDefault();
-
+            var arguments = Environment.GetCommandLineArgs().Skip(1);
+            
+            var solutionPath = arguments.FirstOrDefault();
+            
             if (solutionPath == null)
             {
                 MessageBox.Show("Please give first command as location to Caros4 solution", "Cannot publish", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
@@ -85,8 +87,9 @@ namespace Caros.CI.Publisher
 
             _startTime = DateTime.Now;
 
-            var publisher = new Publisher(solutionPath);
+            bool ignoreDirtyRepo = arguments.Any(x => x == "--ignore-dirty-repo");
 
+            var publisher = new Publisher(solutionPath, ignoreDirtyRepo);
             publisher.OnInfo += publisher_OnInfo;
             publisher.OnFailure += publisher_OnFailure;
             publisher.OnFinishedAll += publisher_OnFinishedAll;

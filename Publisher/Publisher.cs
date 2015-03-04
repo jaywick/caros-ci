@@ -23,14 +23,16 @@ namespace Caros.CI.Publisher
 
         private string _path;
         private Repository _repo;
+        private bool _ignoreDirtyRepo;
 
         private string ZipPackage { get; set; }
         private string OutputPath { get; set; }
         private ReleaseVersion NewRelease { get; set; }
 
-        public Publisher(string solutionPath)
+        public Publisher(string solutionPath, bool ignoreDirtyRepo)
         {
             _path = solutionPath;
+            _ignoreDirtyRepo = ignoreDirtyRepo;
         }
 
         public async void Start()
@@ -107,12 +109,24 @@ namespace Caros.CI.Publisher
                 Fail("Repository not found");
                 return false;
             }
+            else
+                Success("Repository exists");
 
             if (!_repo.IsClean)
             {
-                Fail("Repository is dirty");
-                return false;
+                if (_ignoreDirtyRepo)
+                {
+                    Info("Ignoring dirty repo");
+                    return true;
+                }
+                else
+                {
+                    Fail("Repository is dirty");
+                    return false;
+                }
             }
+            else
+                Success("Repository is clean");
 
             return true;
         }
@@ -165,13 +179,13 @@ namespace Caros.CI.Publisher
                 OnInfo.Invoke(message);
         }
 
-        public void Success(string message, float progress)
+        public void Success(string message, float? progress = null)
         {
             if (OnSuccess != null)
                 OnSuccess.Invoke(message);
 
-            if (OnUpdateProgress != null)
-                OnUpdateProgress.Invoke(progress);
+            if (OnUpdateProgress != null && progress.HasValue)
+                OnUpdateProgress.Invoke(progress.Value);
         }
 
         public void Finish(string message)
