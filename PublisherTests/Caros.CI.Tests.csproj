@@ -79,138 +79,6 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
-    <None Include="TestRepos\clean-repo\.git\COMMIT_EDITMSG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\description">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\HEAD">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\applypatch-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\commit-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\post-update.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\pre-applypatch.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\pre-commit.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\pre-push.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\pre-rebase.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\prepare-commit-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\hooks\update.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\index">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\info\exclude">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\logs\HEAD">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\logs\refs\heads\master">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\objects\95\d09f2b10159347eece71399a7e2e907ea3df4f">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\objects\b9\07b9cc29a10b91d6808787d5dd27d8c385958f">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\objects\e8\c3bcec01ac3c2ea41249cdfc8c4493d9c29836">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\refs\heads\master">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\clean-repo\.git\sourcetreeconfig">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\COMMIT_EDITMSG">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\config">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\description">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\HEAD">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\applypatch-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\commit-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\post-update.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\pre-applypatch.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\pre-commit.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\pre-push.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\pre-rebase.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\prepare-commit-msg.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\hooks\update.sample">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\index">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\info\exclude">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\logs\HEAD">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\logs\refs\heads\master">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\objects\95\d09f2b10159347eece71399a7e2e907ea3df4f">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\objects\b9\07b9cc29a10b91d6808787d5dd27d8c385958f">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\objects\e8\c3bcec01ac3c2ea41249cdfc8c4493d9c29836">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\refs\heads\master">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Include="TestRepos\dirty-repo\.git\sourcetreeconfig">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\API\Caros.CI.API\Caros.CI.API.csproj">
@@ -223,23 +91,29 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="TestRepos\clean-repo\hello.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestRepos\dirty-repo\hello.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-    <Content Include="TestRepos\no-repo\hello.txt">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </Content>
-  </ItemGroup>
-  <ItemGroup>
+    <Folder Include="TestRepos\clean-repo\.git\hooks\" />
+    <Folder Include="TestRepos\clean-repo\.git\info\" />
+    <Folder Include="TestRepos\clean-repo\.git\logs\refs\heads\" />
+    <Folder Include="TestRepos\clean-repo\.git\objects\95\" />
+    <Folder Include="TestRepos\clean-repo\.git\objects\b9\" />
+    <Folder Include="TestRepos\clean-repo\.git\objects\e8\" />
     <Folder Include="TestRepos\clean-repo\.git\objects\info\" />
     <Folder Include="TestRepos\clean-repo\.git\objects\pack\" />
+    <Folder Include="TestRepos\clean-repo\.git\refs\heads\" />
     <Folder Include="TestRepos\clean-repo\.git\refs\tags\" />
+    <Folder Include="TestRepos\dirty-repo\.git\hooks\" />
+    <Folder Include="TestRepos\dirty-repo\.git\info\" />
+    <Folder Include="TestRepos\dirty-repo\.git\logs\refs\heads\" />
+    <Folder Include="TestRepos\dirty-repo\.git\objects\95\" />
+    <Folder Include="TestRepos\dirty-repo\.git\objects\b9\" />
+    <Folder Include="TestRepos\dirty-repo\.git\objects\e8\" />
     <Folder Include="TestRepos\dirty-repo\.git\objects\info\" />
     <Folder Include="TestRepos\dirty-repo\.git\objects\pack\" />
+    <Folder Include="TestRepos\dirty-repo\.git\refs\heads\" />
     <Folder Include="TestRepos\dirty-repo\.git\refs\tags\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="TestRepos\no-repo\hello.txt" />
   </ItemGroup>
   <Choose>
     <When Condition="'$(VisualStudioVersion)' == '10.0' And '$(IsCodedUITest)' == 'True'">
