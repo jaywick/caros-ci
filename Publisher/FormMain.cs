@@ -48,7 +48,7 @@ namespace Caros.CI.Publisher
         private void Post(string message, Publisher.EventTypes result)
         {
             var timeInfo = (DateTime.Now - _startTime).ToString(@"mm\:ss\.fff");
-            listEvents.Items.Add(message, GetImageKeyFromEventType(result)).SubItems.Add(timeInfo);
+            this.Invoke((MethodInvoker)delegate { listEvents.Items.Add(message, GetImageKeyFromEventType(result)).SubItems.Add(timeInfo); });
         }
 
         private string GetImageKeyFromEventType(Publisher.EventTypes result)
@@ -66,7 +66,7 @@ namespace Caros.CI.Publisher
             }
         }
 
-        bool _formActivated  = false;
+        bool _formActivated = false;
         private void FormMain_Activated(object sender, EventArgs e)
         {
             if (_formActivated)
