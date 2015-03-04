@@ -16,18 +16,9 @@ namespace Caros.CI.API
         {
             var packageFile = Path.Combine(Path.GetTempPath(), String.Format(PackageNameFormat, fileName));
 
-            var archive = ZipFile.Create(packageFile);
-            archive.BeginUpdate();
-
-            foreach (var item in new DirectoryInfo(sourcePath).EnumerateFiles("*", SearchOption.AllDirectories))
-            {
-                var relativePath = item.FullName.Substring(sourcePath.Length + 1);
-                archive.Add(item.FullName, relativePath);
-            }
-
-            archive.Password = Key;
-            archive.CommitUpdate();
-            archive.Close();
+            var zip = new FastZip();
+            zip.Password = Key;
+            zip.CreateZip(packageFile, sourcePath, true, null);
 
             return packageFile;
         }
