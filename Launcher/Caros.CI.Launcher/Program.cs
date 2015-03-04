@@ -8,7 +8,7 @@ namespace Caros.CI.Launcher
         [STAThread]
         static void Main()
         {
-            new Deployment().Launch(@"c:\caros\system\binaries");
+            Deployment.Launch(@"c:\caros\system\binaries");
         }
     }
 }

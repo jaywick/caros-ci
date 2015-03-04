@@ -10,22 +10,31 @@ namespace Caros.CI.API
 {
     public class Deployment
     {
-        public void Deploy(UpdateInfo update, string binariesFolder)
+        public static void Deploy(UpdateInfo update, string binariesFolder)
         {
-            var temp = update.Download();
-            var newFolder = Path.Combine(binariesFolder, update.Version.ReleaseName);
+            var downloadPackage = update.Download();
+            Deploy(downloadPackage, update.Version, binariesFolder);
+        }
+
+        public static void Deploy(string downloadPackage, ReleaseVersion version, string binariesFolder)
+        {
+            var newFolder = Path.Combine(binariesFolder, version.ReleaseName);
 
             Directory.CreateDirectory(newFolder);
 
-            Zip.Uncompress(temp, newFolder);
+            Zip.Uncompress(downloadPackage, newFolder);
 
-            File.WriteAllText(Path.Combine(binariesFolder, "version.pointer"), update.Version.ReleaseName);
+            File.WriteAllText(Path.Combine(binariesFolder, "version.pointer"), version.ReleaseName);
         }
 
-        public void Launch(string binariesFolder)
+        public static void Launch(string binariesFolder)
         {
-            var currentVersion = Path.Combine(binariesFolder, "version.pointer");
-            var executable = new DirectoryInfo(currentVersion).EnumerateFiles("caros.exe").Single();
+            var currentVersion = File.ReadAllText(Path.Combine(binariesFolder, "version.pointer"));
+            var binaries = Path.Combine(binariesFolder, currentVersion);
+
+            var executable = new DirectoryInfo(binaries)
+                .EnumerateFiles()
+                .Single(x => x.Name.ToLower() == "caros.exe");
 
             Process.Start(executable.FullName);
         }
