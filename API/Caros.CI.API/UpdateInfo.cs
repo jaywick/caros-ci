@@ -16,7 +16,7 @@ namespace Caros.CI.API
         private static UpdateInfo _none = new UpdateInfo();
         public static UpdateInfo None { get { return _none; } }
 
-        private const string DownloadAddressFormat = "http://internal.jay-wick.com/caros/updates/{0}.caros-update";
+        private const string DownloadAddressFormat = "http://inhouse.jaywick.io/caros/updates/{0}.caros-update";
 
         public UpdateInfo(int releaseNumber)
         {
