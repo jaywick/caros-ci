@@ -28,6 +28,7 @@ namespace Caros.CI.API
             var request = WebRequest.Create("ftp://" + Host + "/updates/" + file.Name) as FtpWebRequest;
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.Credentials = _credentials;
+            request.Timeout = -1;
 
             var contents = File.ReadAllBytes(file.FullName);
             request.ContentLength = contents.Length;
