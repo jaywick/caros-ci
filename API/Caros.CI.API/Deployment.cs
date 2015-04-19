@@ -10,19 +10,19 @@ namespace Caros.CI.API
 {
     public class Deployment
     {
-        public static void Deploy(UpdateInfo update, string binariesFolder)
+        public static async Task Deploy(UpdateInfo update, string binariesFolder)
         {
-            var downloadPackage = update.Download();
-            Deploy(downloadPackage, update.Version, binariesFolder);
+            var downloadPackage = await update.Download();
+            await Deploy(downloadPackage, update.Version, binariesFolder);
         }
 
-        public static void Deploy(string downloadPackage, ReleaseVersion version, string binariesFolder)
+        public static async Task Deploy(string downloadPackage, ReleaseVersion version, string binariesFolder)
         {
             var newFolder = Path.Combine(binariesFolder, version.ReleaseName);
 
             Directory.CreateDirectory(newFolder);
 
-            Zip.Uncompress(downloadPackage, newFolder);
+            await Task.Run(() => Zip.Uncompress(downloadPackage, newFolder));
 
             File.WriteAllText(Path.Combine(binariesFolder, "version.pointer"), version.ReleaseName);
         }

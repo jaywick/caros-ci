@@ -21,16 +21,44 @@ namespace Caros.CI.API
             _credentials = new System.Net.NetworkCredential(Username, Password);
         }
 
-        public static bool Upload(string sourceFile)
+        public static bool Upload(string sourceFile, ReleaseVersion version)
         {
             var file = new FileInfo(sourceFile);
 
+            if (!UploadPackage(file))
+                return false;
+
+            return UploadVersionPointer(version);
+        }
+
+        private static bool UploadPackage(FileInfo file)
+        {
             var request = WebRequest.Create("ftp://" + Host + "/updates/" + file.Name) as FtpWebRequest;
             request.Method = WebRequestMethods.Ftp.UploadFile;
             request.Credentials = _credentials;
             request.Timeout = -1;
 
             var contents = File.ReadAllBytes(file.FullName);
+            request.ContentLength = contents.Length;
+
+            using (var requestStream = request.GetRequestStream())
+            {
+                requestStream.Write(contents, 0, contents.Length);
+            }
+
+            var response = (FtpWebResponse)request.GetResponse();
+
+            return response.StatusDescription.StartsWith("226-File successfully transferred");
+        }
+
+        private static bool UploadVersionPointer(ReleaseVersion version)
+        {
+            var request = WebRequest.Create("ftp://" + Host + "/updates/" + VersionPointerFileName) as FtpWebRequest;
+            request.Method = WebRequestMethods.Ftp.UploadFile;
+            request.Credentials = _credentials;
+            request.Timeout = -1;
+
+            var contents = Encoding.Default.GetBytes(version.ReleaseNumber.ToString());
             request.ContentLength = contents.Length;
 
             using (var requestStream = request.GetRequestStream())

@@ -159,7 +159,7 @@ namespace Caros.CI.Publisher
 
         private bool uploadFtp()
         {
-            var result = Ftp.Upload(ZipPackage);
+            var result = Ftp.Upload(ZipPackage, NewRelease);
 
             if (!result)
                 Fail("FTP Failed");
