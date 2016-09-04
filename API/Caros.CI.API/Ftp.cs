@@ -11,9 +11,9 @@ namespace Caros.CI.API
     {
         private static NetworkCredential _credentials;
 
-        private const string Host = "jaywick.io";
-        private const string Password = "=v7ClNt%X8@&dlk)Xe";
-        private const string Username = "caros@jaywick.io";
+        private const string Host = "HOSTHERE.COM";
+        private const string Password = "PASSWORDHERE";
+        private const string Username = "USERNAME@DOMAIN.COM";
         private const string VersionPointerFileName = "version.pointer";
 
         static Ftp()
